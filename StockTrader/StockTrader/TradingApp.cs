@@ -25,7 +25,7 @@ namespace stockTrader
 		    Console.WriteLine("Please enter a number.");
 	    }
 
-			ILogger logger = new FileLogger();
+		ILogger logger = new FileLogger();
 		
 	    try {
 		    bool purchased = Trader.Instance.Buy(symbol, price);
