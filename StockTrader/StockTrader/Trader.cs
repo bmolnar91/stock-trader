@@ -34,7 +34,7 @@ namespace stockTrader
                 result = false;
             }
             return result;
-    }
+        }
         
     }
 }
