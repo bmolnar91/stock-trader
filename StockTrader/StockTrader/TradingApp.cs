@@ -1,7 +1,5 @@
 ﻿using stockTrader.StockTrader;
 using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.ConstrainedExecution;
 
 namespace stockTrader
 {
@@ -25,10 +23,15 @@ namespace stockTrader
 		    Console.WriteLine("Please enter a number.");
 	    }
 
+		string apiPath = "https://run.mocky.io/v3/9e14e086-84c2-4f98-9e36-54928830c980?stock={0}";
+
+		RemoteURLReader reader = new RemoteURLReader();
+		StockAPIService stockService = new StockAPIService(apiPath, reader);
 		ILogger logger = new FileLogger();
+		Trader trader = new Trader(stockService, logger);
 		
 	    try {
-		    bool purchased = Trader.Instance.Buy(symbol, price);
+		    bool purchased = trader.Buy(symbol, price);
 		    if (purchased) {
 			    logger.Log("Purchased stock!");
 		    }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace stockTrader.StockTrader
 {
-    interface ILogger
+    public interface ILogger
     {
         public void Log(string message);
     }

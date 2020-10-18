@@ -4,28 +4,15 @@ namespace stockTrader
 {
     public class Trader
     {
-        private static Trader _instance;
+        readonly StockAPIService _stockService;
+        readonly ILogger _logger;
 
-        public static Trader Instance
+        public Trader(StockAPIService stockService, ILogger logger)
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new Trader();
-                }
-                return _instance;
-            }
+            _stockService = stockService;
+            _logger = logger;
         }
 
-        private readonly StockAPIService _stockApiService;
-
-        public Trader()
-        {
-            _stockApiService = new StockAPIService();
-        }
-
-        private readonly ILogger logger = new FileLogger();
 
         /// <summary>
         /// Checks the price of a stock, and buys it if the price is not greater than the bid amount.
@@ -35,15 +22,15 @@ namespace stockTrader
         /// <returns>whether any stock was bought</returns>
         public bool Buy(string symbol, double bid) 
         {
-            double price = _stockApiService.GetPrice(symbol);
+            double price = _stockService.GetPrice(symbol);
             bool result;
             if (price <= bid) {
                 result = true;
-                _stockApiService.Buy(symbol);
-                logger.Log("Purchased " + symbol + " stock at $" + bid + ", since its higher that the current price ($" + price + ")");
+                _stockService.Buy(symbol);
+                _logger.Log("Purchased " + symbol + " stock at $" + bid + ", since its higher that the current price ($" + price + ")");
             }
             else {
-                logger.Log("Bid for " + symbol + " was $" + bid + " but the stock price is $" + price + ", no purchase was made.");
+                _logger.Log("Bid for " + symbol + " was $" + bid + " but the stock price is $" + price + ", no purchase was made.");
                 result = false;
             }
             return result;
