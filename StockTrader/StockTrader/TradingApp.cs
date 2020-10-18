@@ -1,4 +1,7 @@
-﻿using System;
+﻿using stockTrader.StockTrader;
+using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
 
 namespace stockTrader
 {
@@ -21,17 +24,19 @@ namespace stockTrader
 	    {
 		    Console.WriteLine("Please enter a number.");
 	    }
-	    
+
+			ILogger logger = new FileLogger();
+		
 	    try {
 		    bool purchased = Trader.Instance.Buy(symbol, price);
 		    if (purchased) {
-			    Logger.Instance.Log("Purchased stock!");
+			    logger.Log("Purchased stock!");
 		    }
 		    else {
-			    Logger.Instance.Log("Couldn't buy the stock at that price.");
+			    logger.Log("Couldn't buy the stock at that price.");
 		    }
 	    } catch (Exception e) {
-		    Logger.Instance.Log("There was an error while attempting to buy the stock: " + e.Message);
+		    logger.Log("There was an error while attempting to buy the stock: " + e.Message);
 	    }
         Console.ReadLine();
     }
