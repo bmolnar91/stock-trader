@@ -8,4 +8,4 @@ The Test project uses `NUnit` and `NSubstitute` for mock testing.
 
 ---
 
-![Demo image](./demo-image.PNG)
+![Demo image](./demo-image.png)
